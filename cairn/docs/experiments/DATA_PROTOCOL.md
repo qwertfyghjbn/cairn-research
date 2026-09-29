@@ -219,7 +219,7 @@ Flag 本身可能是评测秘密。事件和 `result.json` 应优先记录 submi
 
 ## 12. 验证命令
 
-从仓库根目录运行：
+从 Cairn 组件根目录（工作区的 `cairn/`）运行：
 
 ```bash
 python -m experiments.protocol.validate runs/<run_id>

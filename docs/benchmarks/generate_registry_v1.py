@@ -14,7 +14,9 @@ No solutions are read; only metadata.json fields and directory names.
 import json, os, glob, re
 from pathlib import Path
 
-CYBENCH_REPO = str(Path(__file__).resolve().parents[3] / "cybench_repo")
+CYBENCH_REPO = os.environ.get(
+    "CYBENCH_REPO", str(Path(__file__).resolve().parents[2] / "cybench_repo")
+)
 
 NYU_TEST_200 = """2017f-rev-48_bit_yeet_lab 2017f-rev-rusty_road 2017f-rev-rabbithole 2017f-cry-ecxor 2017f-cry-lupin
 2017f-for-thoroughlystripped 2017f-pwn-humm_sch_t 2017q-rev-bananascript 2017q-rev-tablez 2017q-rev-realism

@@ -1,6 +1,5 @@
-.vscode/
-.DS_Store
-__pycache__/
-.playwright-cli/
-datas/
-dispatch.yaml
+cybench_repo/
+.agents/
+.aws/
+.codex/
+*:Zone.Identifier

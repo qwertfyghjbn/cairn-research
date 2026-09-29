@@ -36,13 +36,13 @@ why `oritera/Cairn` was selected instead of other projects with the same name.
 
 ## Repository arrangement
 
-- The upstream repository was originally checked out at `/home/lqs/cairn_research/cairn`.
-- The upstream remote is named `upstream`.
-- Research work starts on `research/v0-baseline`.
+- The workspace repository keeps the Cairn source under `cairn/`.
+- The research branch is `research/v0-baseline`; the frozen upstream source is
+  commit `8e7e0ea67552383851dfcabfba0c4e9c8d007878`.
 - The research fork is published to
   `https://github.com/qwertfyghjbn/cairn-research.git` as `origin`.
-- The original project plan is also included in this research branch at
-  [`CRS_PROJECT_INIT.md`](../../CRS_PROJECT_INIT.md).
+- The original project plan is included at
+  [`CRS_PROJECT_INIT.md`](../../../CRS_PROJECT_INIT.md).
 
 ## Frozen toolchain inputs
 
@@ -64,7 +64,8 @@ independently of index resolution. The upstream files remain unchanged.
 
 ## Reproduction commands
 
-Run the checked-in verification wrapper from the repository root:
+Run the checked-in verification wrapper from the Cairn component root
+(`cairn/` within the workspace):
 
 ```bash
 ./scripts/verify_m0_baseline.sh

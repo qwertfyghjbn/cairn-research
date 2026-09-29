@@ -25,7 +25,7 @@
 ## 1. 仓库与组件
 
 ```text
-仓库根目录/
+Cairn 组件根目录（工作区的 `cairn/`）/
 ├── cairn/pyproject.toml, cairn/uv.lock  Python 包与依赖锁
 ├── cairn/src/cairn/cli.py                serve / dispatch 命令
 ├── cairn/src/cairn/server/               FastAPI、SQLite、协议路由、导出

@@ -36,13 +36,13 @@ why `oritera/Cairn` was selected instead of other projects with the same name.
 
 ## Repository arrangement
 
-- The upstream repository is checked out at `/home/lqs/cairn_research/cairn`.
+- The upstream repository was originally checked out at `/home/lqs/cairn_research/cairn`.
 - The upstream remote is named `upstream`.
 - Research work starts on `research/v0-baseline`.
-- No `origin` remote is configured because no user-owned fork URL has been
-  provided. Add it only after a real fork exists.
-- The original project plan remains at
-  `/home/lqs/cairn_research/CRS_PROJECT_INIT.md`.
+- The research fork is published to
+  `https://github.com/qwertfyghjbn/cairn-research.git` as `origin`.
+- The original project plan is also included in this research branch at
+  [`CRS_PROJECT_INIT.md`](../../CRS_PROJECT_INIT.md).
 
 ## Frozen toolchain inputs
 

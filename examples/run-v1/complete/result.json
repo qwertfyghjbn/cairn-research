@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run-001",
+  "status": "UNSOLVED",
+  "validity": "VALID",
+  "termination_reason": "project_completed_unverified",
+  "accepted_submission": null,
+  "runtime_invalid_reason": null,
+  "evaluator_version": "mock-evaluator-v1",
+  "evaluated_at": "2026-09-29T10:00:02Z"
+}

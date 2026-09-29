@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cairn.local/schemas/run-v1/run-metrics.schema.json",
+  "title": "Cairn Run Metrics v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "metric_set_version", "values", "derived_from"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "run_id": { "$ref": "#/$defs/id" },
+    "metric_set_version": { "$ref": "#/$defs/id" },
+    "values": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "time_to_flag_ms",
+        "tokens_total",
+        "tokens_to_flag",
+        "llm_calls",
+        "tool_calls",
+        "cost_total_usd",
+        "runtime_failures",
+        "facts_created",
+        "intents_created",
+        "intents_completed",
+        "intents_abandoned",
+        "artifacts_created"
+      ],
+      "properties": {
+        "time_to_flag_ms": { "$ref": "#/$defs/nonnegative_or_null" },
+        "tokens_total": { "$ref": "#/$defs/nonnegative_or_null" },
+        "tokens_to_flag": { "$ref": "#/$defs/nonnegative_or_null" },
+        "llm_calls": { "type": "integer", "minimum": 0 },
+        "tool_calls": { "type": "integer", "minimum": 0 },
+        "cost_total_usd": { "$ref": "#/$defs/nonnegative_or_null" },
+        "runtime_failures": { "type": "integer", "minimum": 0 },
+        "facts_created": { "type": "integer", "minimum": 0 },
+        "intents_created": { "type": "integer", "minimum": 0 },
+        "intents_completed": { "type": "integer", "minimum": 0 },
+        "intents_abandoned": { "type": "integer", "minimum": 0 },
+        "artifacts_created": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "derived_from": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events_sha256", "evaluator_version", "calculation_version"],
+      "properties": {
+        "events_sha256": { "$ref": "#/$defs/sha256" },
+        "evaluator_version": { "$ref": "#/$defs/id" },
+        "calculation_version": { "$ref": "#/$defs/id" }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "nonnegative_or_null": { "type": ["number", "null"], "minimum": 0 }
+  }
+}

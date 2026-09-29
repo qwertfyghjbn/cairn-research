@@ -409,6 +409,9 @@ start time / end time
 
 secret 值不得进入 manifest；只记录是否配置、来源类别或脱敏标识。
 
+字段类型、事件关联、结果分类、Artifact 索引和跨文件一致性由已经生效的
+[Experiment Data Protocol v1](DATA_PROTOCOL.md)统一定义。
+
 ## 17. 验证门槛
 
 ### C-VERIFY-01：V0 pristine
@@ -464,4 +467,5 @@ secret 值不得进入 manifest；只记录是否配置、来源类别或脱敏�
 - 合同条款能够引用当前源码和测试入口；
 - V0、对照实验变量、观测层和 research variant 的边界明确；
 - 上游已跟踪运行代码相对冻结提交没有变化；
-- 下一阶段的 Experiment Harness 以 `contract_version: 1` 写入 manifest。
+- 后续 Experiment Harness 以 `contract_version: 1` 和数据协议 `schema_version: 1.0`
+  写入 manifest。

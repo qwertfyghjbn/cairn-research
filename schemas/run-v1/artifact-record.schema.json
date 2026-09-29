@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cairn.local/schemas/run-v1/artifact-record.schema.json",
+  "title": "Cairn Artifact Record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "artifact_id",
+    "artifact_type",
+    "relative_path",
+    "sha256",
+    "size_bytes",
+    "media_type",
+    "producer_worker_id",
+    "producer_event_id",
+    "created_at",
+    "redaction"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "run_id": { "$ref": "#/$defs/id" },
+    "artifact_id": { "$ref": "#/$defs/id" },
+    "artifact_type": {
+      "enum": [
+        "command_output",
+        "prompt",
+        "model_response",
+        "exploit_script",
+        "binary",
+        "pcap",
+        "source_snippet",
+        "scan_result",
+        "screenshot",
+        "generated_payload",
+        "evaluator_output",
+        "other"
+      ]
+    },
+    "relative_path": { "type": "string", "pattern": "^artifacts/(?!.*(?:^|/)\\.\\.(?:/|$))[^/].+$" },
+    "sha256": { "$ref": "#/$defs/sha256" },
+    "size_bytes": { "type": "integer", "minimum": 0 },
+    "media_type": { "type": "string", "minLength": 1 },
+    "producer_worker_id": {
+      "anyOf": [
+        { "$ref": "#/$defs/id" },
+        { "type": "null" }
+      ]
+    },
+    "producer_event_id": { "$ref": "#/$defs/id" },
+    "created_at": { "$ref": "#/$defs/timestamp" },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applied", "method"],
+      "properties": {
+        "applied": { "type": "boolean" },
+        "method": { "type": ["string", "null"], "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}

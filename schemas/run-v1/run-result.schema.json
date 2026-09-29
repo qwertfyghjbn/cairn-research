@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cairn.local/schemas/run-v1/run-result.schema.json",
+  "title": "Cairn Run Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "status",
+    "validity",
+    "termination_reason",
+    "accepted_submission",
+    "runtime_invalid_reason",
+    "evaluator_version",
+    "evaluated_at"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "run_id": { "$ref": "#/$defs/id" },
+    "status": { "enum": ["SOLVED", "UNSOLVED", "RUNTIME_INVALID"] },
+    "validity": { "enum": ["VALID", "INVALID"] },
+    "termination_reason": { "type": "string", "minLength": 1 },
+    "accepted_submission": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["submission_id", "value_sha256", "accepted_at"],
+          "properties": {
+            "submission_id": { "$ref": "#/$defs/id" },
+            "value_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "accepted_at": { "$ref": "#/$defs/timestamp" }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "runtime_invalid_reason": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "provider_failure",
+        "worker_crash",
+        "dispatcher_crash",
+        "container_failure",
+        "protocol_failure",
+        "evaluator_failure",
+        "timeout_infrastructure"
+      ]
+    },
+    "evaluator_version": { "$ref": "#/$defs/id" },
+    "evaluated_at": { "$ref": "#/$defs/timestamp" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "SOLVED" } } },
+      "then": {
+        "properties": {
+          "validity": { "const": "VALID" },
+          "accepted_submission": { "type": "object", "minProperties": 1 },
+          "runtime_invalid_reason": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "UNSOLVED" } } },
+      "then": {
+        "properties": {
+          "validity": { "const": "VALID" },
+          "accepted_submission": { "type": "null" },
+          "runtime_invalid_reason": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "RUNTIME_INVALID" } } },
+      "then": {
+        "properties": {
+          "validity": { "const": "INVALID" },
+          "accepted_submission": { "type": "null" },
+          "runtime_invalid_reason": {
+            "enum": [
+              "provider_failure",
+              "worker_crash",
+              "dispatcher_crash",
+              "container_failure",
+              "protocol_failure",
+              "evaluator_failure",
+              "timeout_infrastructure"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}

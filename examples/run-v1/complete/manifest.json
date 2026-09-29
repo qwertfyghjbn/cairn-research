@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run-001",
+  "experiment_id": "m3-protocol-example",
+  "run_state": "finished",
+  "task": {
+    "task_id": "diag.mock.001",
+    "task_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "challenge_version": "mock-v1"
+  },
+  "system": {
+    "system_version": "cairn-v0-observed-m3",
+    "git_commit": "8e7e0ea67552383851dfcabfba0c4e9c8d007878",
+    "baseline_id": "cairn-main-8e7e0ea",
+    "contract_version": 1
+  },
+  "model": {
+    "provider": "mock",
+    "model_id": "cairn-mock-worker",
+    "model_version": "0.2.1",
+    "parameters": {
+      "temperature": 0
+    },
+    "endpoint_type": "local-process",
+    "provider_supports_seed": true
+  },
+  "workers": {
+    "count": 1,
+    "configuration": [
+      {
+        "name": "worker-001",
+        "type": "mock",
+        "task_types": ["bootstrap", "reason", "explore"],
+        "priority": 0,
+        "max_running": 1,
+        "cli_version": "0.2.1",
+        "session_mode": "none"
+      }
+    ]
+  },
+  "prompts": {
+    "prompt_group": "default",
+    "hashes": {
+      "bootstrap.md": "82e9fbf22131612aa638a1d43e41b7a6ff4de5e2a80b4b74f0e55854c7cc29f7",
+      "bootstrap_conclude.md": "4154e53a9ca30b9bae600d8d5315d6ad634eb4836d25eee25a14c2ca975782a0",
+      "reason.md": "22bc2342ff5d29fd748553927bb46e29cb87f86034b406efb6d402592e104060",
+      "explore.md": "7847eb249a7a6b7ddeafe37d44fc9d8443ae9f368ce2ae48a7b161e3726635d9",
+      "explore_conclude.md": "389db6c19e92882ab8d86592185cdbc5016ea79c9c449a3d31ed5e1f3a721394"
+    }
+  },
+  "environment": {
+    "execution_mode": "container",
+    "os": "linux/amd64",
+    "python_version": "3.12",
+    "uv_version": "0.8",
+    "container_digests": {
+      "worker_index": "sha256:d90d40b7c634b8d5dc9464e04b863a185b9efe964ffd2b246f6e5cbc2a2ef053",
+      "worker_linux_amd64": "sha256:d41bd6922951e7237f0c1c2cd4451b4bb7d38cf373e2258ae00b841a71fcdfc2"
+    },
+    "network_mode": "host",
+    "capabilities": [],
+    "tool_permissions": ["shell", "read_workspace"],
+    "public_environment": {
+      "PROVIDER_MODE": "mock"
+    },
+    "cleanup_policy": "stop"
+  },
+  "budget": {
+    "wall_clock_seconds": 300,
+    "llm_calls": 10,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cost_usd": null,
+    "price_table_version": null
+  },
+  "timeouts": {
+    "bootstrap_seconds": 60,
+    "bootstrap_conclude_seconds": 30,
+    "reason_seconds": 60,
+    "explore_seconds": 60,
+    "explore_conclude_seconds": 30
+  },
+  "retry_policy": {
+    "max_attempts": 1,
+    "backoff": "none"
+  },
+  "evaluator_version": "mock-evaluator-v1",
+  "random_seed": "example-seed-001",
+  "started_at": "2026-09-29T10:00:00Z",
+  "finished_at": "2026-09-29T10:00:02Z",
+  "instrumentation": {
+    "version": "protocol-example-v1",
+    "overhead_capture": true
+  }
+}

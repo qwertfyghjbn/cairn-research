@@ -39,10 +39,14 @@
 │   ├── runtime/                           lease、进程、容器/本地后端
 │   └── prompts/{default,mock}/           随包分发的 Prompt
 ├── cairn/tests/                           协议、调度、运行时、mock 集成测试
+├── experiments/protocol/                  统一实验数据协议验证器
+├── schemas/run-v1/                        M3 JSON Schema
+├── examples/run-v1/                       可验证的协议示例
 ├── dispatch*.yaml                         Dispatcher 配置示例
 ├── Dockerfile, docker-compose.yaml        应用容器部署
 ├── container/                             Worker 镜像构建资源
-└── docs/specs/                            上游协议与设计说明
+├── docs/specs/                            上游协议与设计说明
+└── docs/experiments/                      基线合同和实验数据协议
 ```
 
 | 职责 | 代码入口 | 运行时作用 |
@@ -225,4 +229,6 @@ Worker 看见了哪个 Fact”或 Fact 创建时刻。研究级指标需要在�
 
 M0 的固定依赖验证命令是 `./scripts/verify_m0_baseline.sh`；已记录 `98 passed`。
 M1 只增加此文档，没有修改运行路径。M2 合同进一步冻结了上述语义，并明确哪些观测
-接点允许写入，以及如何避免日志失败或开销影响任务运行。
+接点允许写入，以及如何避免日志失败或开销影响任务运行。M3 的
+[Experiment Data Protocol](../experiments/DATA_PROTOCOL.md)统一规定观测产物的格式、关联与
+验证方式，仍未接入上述运行路径。

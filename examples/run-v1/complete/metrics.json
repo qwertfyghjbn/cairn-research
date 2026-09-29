@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run-001",
+  "metric_set_version": "baseline-v1",
+  "values": {
+    "time_to_flag_ms": null,
+    "tokens_total": 0,
+    "tokens_to_flag": null,
+    "llm_calls": 0,
+    "tool_calls": 0,
+    "cost_total_usd": 0,
+    "runtime_failures": 0,
+    "facts_created": 1,
+    "intents_created": 0,
+    "intents_completed": 0,
+    "intents_abandoned": 0,
+    "artifacts_created": 1
+  },
+  "derived_from": {
+    "events_sha256": "01d56394397117334a21b74b051aa3f714274f980f0ff798f4dd83ea82a485ba",
+    "evaluator_version": "mock-evaluator-v1",
+    "calculation_version": "baseline-metrics-v1"
+  }
+}

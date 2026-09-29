@@ -3,7 +3,8 @@
 > 供后续 coding agent 阅读。本文描述冻结的上游提交
 > `8e7e0ea67552383851dfcabfba0c4e9c8d007878` 的实际实现；研究分支上的
 > M0 来源、依赖和验证方式见 [M0_BASELINE.md](../experiments/M0_BASELINE.md)。
-> 本文是 Phase 0 的代码地图，不是修改提案或已经批准的 Baseline Contract。
+> 本文是 Phase 0 的代码地图；规范性边界由已经生效的
+> [Baseline Contract](../experiments/BASELINE_CONTRACT.md)定义。
 
 ## 阅读入口与边界
 
@@ -13,7 +14,8 @@
 2. [Server 协议规格](../specs/server-protocol.md)和
    [Dispatcher 设计规格](../specs/dispatcher-design.md)了解原设计；遇到不一致时以本提交的源码为准。
 3. 从 [`cli.py`](../../cairn/src/cairn/cli.py)进入，再沿下表定位具体模块。
-4. 修改代码前先读相关测试；进入 M2 后还应先读待建立的 Baseline Contract。
+4. 修改代码前先读相关测试和已经建立的
+   [Baseline Contract](../experiments/BASELINE_CONTRACT.md)。
 
 本文使用的词汇：**Project** 是一个 origin 到 goal 的搜索实例；**Fact** 是图上的描述节点；
 **Intent** 是从一个或多个 Fact 出发、待探索的方向；**Hint** 是外部注入的信息；
@@ -183,7 +185,8 @@ YAML 图被写入执行环境中的 `/tmp/cairn-prompts/.../graph.yaml`，Prompt
 
 ## 7. 后续观测的最小候选接点
 
-本节只定位接点；是否允许、如何实现由 M2 Baseline Contract 决定。
+本节只定位接点；允许边界与实现要求见已经生效的
+[Baseline Contract](../experiments/BASELINE_CONTRACT.md)。
 
 | 需要的事件/数据 | 候选接点 | 避免改变的行为 |
 | --- | --- | --- |
@@ -199,7 +202,8 @@ Worker 看见了哪个 Fact”或 Fact 创建时刻。研究级指标需要在�
 
 ## 8. 基线语义清单与测试定位
 
-M2 需要把以下候选项写成正式 contract，并为改动建立回归门槛：
+以下候选项已由 [Baseline Contract](../experiments/BASELINE_CONTRACT.md) 写成正式 contract，
+并作为后续改动的回归门槛：
 
 - Project 初始 `origin`/`goal`、`bootstrap_enabled` 与完成/停止/重开状态转换。
 - `Fact`/`Intent`/`Hint` 字段、ID、`from → to` 图写入、`goal` 不得作为来源。
@@ -220,5 +224,5 @@ M2 需要把以下候选项写成正式 contract，并为改动建立回归门�
 | 配置、Driver、输出契约 | [`test_config_and_adapters.py`](../../cairn/tests/test_config_and_adapters.py)、[`test_contracts_and_drivers.py`](../../cairn/tests/test_contracts_and_drivers.py)、[`test_healthcheck.py`](../../cairn/tests/test_healthcheck.py) |
 
 M0 的固定依赖验证命令是 `./scripts/verify_m0_baseline.sh`；已记录 `98 passed`。
-M1 只增加此文档，没有修改运行路径。下一步是 M2：逐条将上述候选语义冻结，并明确
-哪些观测接点允许写入，特别是如何避免日志失败或开销影响任务运行。
+M1 只增加此文档，没有修改运行路径。M2 合同进一步冻结了上述语义，并明确哪些观测
+接点允许写入，以及如何避免日志失败或开销影响任务运行。

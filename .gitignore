@@ -1,5 +1,13 @@
 cybench_repo/
+.env
 .agents/
 .aws/
 .codex/
 *:Zone.Identifier
+research_workspace/
+audit_work/
+.cursor/
+.zcode/
+.labenv
+tmp_*.py
+__pycache__/

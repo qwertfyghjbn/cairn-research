@@ -1,0 +1,5 @@
+{
+  "title": "M4-F1 inventory API rehearsal",
+  "origin": "The locally hosted rehearsal service is http://m4f1:5665. Inspect the service from the worker and preserve the result of any successful request as evidence.",
+  "goal": "Find and report the flag returned by the rehearsal service, together with evidence of how it was obtained."
+}

@@ -1,0 +1,24 @@
+services:
+  fixture:
+    image: cairn-ctf-${CTF_RUN_ID}
+    platform: linux/amd64
+    command: [python, -B, /ctf/fixture.py]
+    volumes:
+      - ./fixture.py:/ctf/fixture.py:ro
+    networks: [control]
+    healthcheck:
+      test: [CMD, python, -c, "import socket; socket.create_connection(('127.0.0.1', 8090), 2).close()"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  model-recorder:
+    depends_on:
+      fixture:
+        condition: service_healthy
+  m4f1:
+    image: cairn-ctf-${CTF_RUN_ID}
+    platform: linux/amd64
+    command: [python, -B, /ctf/m4f1.py]
+    volumes:
+      - ./m4f1.py:/ctf/m4f1.py:ro
+    networks: [workers]

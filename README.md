@@ -29,3 +29,6 @@ is `./cairn/scripts/verify_m0_baseline.sh` from this root.
 
 Start with [CRS_PROJECT_INIT.md](CRS_PROJECT_INIT.md) and
 [the benchmark selection](docs/benchmarks/BENCHMARK_SELECTION_V1.md).
+
+See [Cairn CTF 运行与复盘](ctf/README.md) for the competition deployment,
+evidence format, and local rehearsal commands.

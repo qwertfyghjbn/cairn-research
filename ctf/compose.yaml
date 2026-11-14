@@ -1,0 +1,65 @@
+services:
+  server:
+    image: cairn-ctf-${CTF_RUN_ID}
+    platform: linux/amd64
+    build:
+      context: ${CTF_RUN_DIR}/upstream
+      dockerfile: ${CTF_RUN_DIR}/Dockerfile
+    command: [uv, run, --no-sync, cairn, serve, --host, 0.0.0.0, --db-path, /state/cairn.db, --access-log]
+    ports:
+      - "127.0.0.1:${CTF_PORT}:8000"
+    volumes:
+      - ${CTF_RUN_DIR}/state:/state
+    healthcheck:
+      test: [CMD, python, -c, "import socket; socket.create_connection(('127.0.0.1', 8000), 2).close()"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    networks: [control]
+
+  dispatcher:
+    image: cairn-ctf-${CTF_RUN_ID}
+    platform: linux/amd64
+    command: [uv, run, --no-sync, python, -B, /ctf/observe.py]
+    environment:
+      CTF_CONTAINER_PREFIX: cairn-ctf-${CTF_RUN_ID}-
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./observe.py:/ctf/observe.py:ro
+      - ${CTF_RUN_DIR}/dispatch.json:/config/dispatch.json:ro
+      - ${CTF_RUN_DIR}/evidence/dispatcher:/evidence
+    depends_on:
+      server:
+        condition: service_healthy
+      model-recorder:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, test, -f, /evidence/dispatcher-ready]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    networks: [control]
+
+  model-recorder:
+    image: cairn-ctf-${CTF_RUN_ID}
+    platform: linux/amd64
+    command: [uv, run, --no-sync, python, -B, /ctf/model_recorder.py]
+    environment:
+      CTF_MODEL_URL: ${CTF_MODEL_URL}
+      CTF_PROVIDER_KEY: ${CTF_PROVIDER_KEY:-}
+    volumes:
+      - ./observe.py:/ctf/observe.py:ro
+      - ./model_recorder.py:/ctf/model_recorder.py:ro
+      - ${CTF_RUN_DIR}/model-clients.json:/config/model-clients.json:ro
+      - ${CTF_RUN_DIR}/evidence/model:/evidence
+    healthcheck:
+      test: [CMD, python, -c, "import socket; socket.create_connection(('127.0.0.1', 8080), 2).close()"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    networks: [control, workers]
+
+networks:
+  control: {}
+  workers:
+    name: cairn-ctf-${CTF_RUN_ID}-workers
